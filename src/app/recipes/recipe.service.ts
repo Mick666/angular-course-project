@@ -7,6 +7,7 @@ import { Recipe } from "./recipe.model";
 
 @Injectable()
 export class RecipeService {
+    recipesChanged = new Subject<Recipe[]>();
 
     private recipes: Recipe[] = [
         new Recipe(
@@ -38,11 +39,26 @@ export class RecipeService {
     }
 
     getRecipe(id: number) {
-        console.log(id, this.recipes[id])
         return this.recipes[id]
     }
 
     addIngredients(ingredients: Ingredient[]) {
         this.shoppingService.addIngredients(ingredients);
+    }
+
+    addRecipe(recipe: Recipe): number {
+        this.recipes.push(recipe);
+        this.recipesChanged.next([...this.recipes]);
+        return this.recipes.length-1;
+    }
+
+    updateRecipe(index: number, recipe: Recipe) {
+        this.recipes[index] = recipe;
+        this.recipesChanged.next([...this.recipes]);
+    }
+
+    deleteRecipe(index: number) {
+        this.recipes.splice(index, 1);
+        this.recipesChanged.next([...this.recipes]);
     }
 }

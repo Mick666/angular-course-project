@@ -1,0 +1,15 @@
+input.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.image-preview {
+    max-width: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+
+.flex-box-center {
+    display: flex;
+    justify-content: center;
+}

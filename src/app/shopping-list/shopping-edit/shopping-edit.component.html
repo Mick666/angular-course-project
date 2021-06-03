@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-xs-12">
-        <form>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div class="row">
                 <div class="col-sm-5 form-group">
                     <label for="name">Name</label>
@@ -8,8 +8,12 @@
                         type="text"
                         id="name"
                         class="form-control"
-                        #nameInput
+                        ngModel
+                        name="name"
+                        #name="ngModel"
+                        required
                     >
+                    <span *ngIf="!name.valid && name.touched">A name is required</span>
                 </div>
                 <div class="col-sm-2 form-group">
                     <label for="amount">Amount</label>
@@ -17,17 +21,28 @@
                         type="number" 
                         id="amount" 
                         class="form-control"
-                        #amountInput
+                        ngModel
+                        name="amount"
+                        #amount="ngModel"
+                        required
+                        pattern="^[1-9]+[0-9]*$"
                     >
+                    <span *ngIf="!amount.valid && amount.touched">An amount is required</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button class="btn btn-success edit-button" type="submit" (click)="createNewShoppingList()">Add</button>
-                    <button class="btn btn-danger edit-button" type="button">Delete</button>
-                    <button class="btn btn-primary edit-button" type="button">Clear</button>
+                    <button class="btn btn-success edit-button" type="submit" [disabled]='!f.valid'>
+                        {{ editMode ? 'Update' : 'Add' }}
+                    </button>
+                    <button class="btn btn-danger edit-button" type="button" (click)="onDelete()" *ngIf="editMode">
+                        Delete
+                    </button>
+                    <button class="btn btn-primary edit-button" type="button" (click)="clearForm()">
+                        Clear
+                    </button>
                 </div>
             </div>
-        </form>
+        </form> 
     </div>
 </div>
