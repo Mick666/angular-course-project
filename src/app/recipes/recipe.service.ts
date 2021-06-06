@@ -9,28 +9,30 @@ import { Recipe } from "./recipe.model";
 export class RecipeService {
     recipesChanged = new Subject<Recipe[]>();
 
-    private recipes: Recipe[] = [
-        new Recipe(
-            'Tasty schnitzel',
-            'Super simple, super tasty',
-            'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
-            [
-                new Ingredient('Meat', 1),
-                new Ingredient('French Fries', 20)
-            ]
-        ),
-        new Recipe(
-            'Big fat burger',
-            'It\'s a burger mate',
-            'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
-            [
-                new Ingredient('Buns', 2),
-                new Ingredient('Patty', 1),
-                new Ingredient('Lettuce', 1),
-                new Ingredient('Cheese', 1),
-            ]
-            )
-    ];
+    // private recipes: Recipe[] = [
+    //     new Recipe(
+    //         'Tasty schnitzel',
+    //         'Super simple, super tasty',
+    //         'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
+    //         [
+    //             new Ingredient('Meat', 1),
+    //             new Ingredient('French Fries', 20)
+    //         ]
+    //     ),
+    //     new Recipe(
+    //         'Big fat burger',
+    //         'It\'s a burger mate',
+    //         'https://upload.wikimedia.org/wikipedia/commons/6/6d/Good_Food_Display_-_NCI_Visuals_Online.jpg',
+    //         [
+    //             new Ingredient('Buns', 2),
+    //             new Ingredient('Patty', 1),
+    //             new Ingredient('Lettuce', 1),
+    //             new Ingredient('Cheese', 1),
+    //         ]
+    //         )
+    // ];
+
+    private recipes: Recipe[] = [];
 
     constructor(private shoppingService: ShoppingService) {}
 
@@ -40,6 +42,11 @@ export class RecipeService {
 
     getRecipe(id: number) {
         return this.recipes[id]
+    }
+
+    setRecipes(recipes: Recipe[]) {
+        this.recipes = recipes;
+        this.recipesChanged.next([...this.recipes]);
     }
 
     addIngredients(ingredients: Ingredient[]) {
