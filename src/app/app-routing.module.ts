@@ -3,11 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/auth', pathMatch: 'full'},
+  {path: '', redirectTo: '/recipes', pathMatch: 'full'},
   { 
     path: 'recipes',
     loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'shopping-list',
